@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>云南临沧双江自有茶园生态监测与茶文化门户</title>
+  <title>云南临沧双江自有茶园智慧巡航与顶级品质服务门户</title>
   <!-- 引入 Leaflet 地图样式 -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
@@ -24,20 +24,27 @@
     .date { color: #888; font-size: 12px; }
     #map { width: 100%; height: 260px; border-radius: 8px; z-index: 1; }
     
-    /* IoT 设备数据网格 */
+    /* IoT & 无人机数据网格 */
     .iot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 10px; }
     .iot-box { background: #f8faf9; border: 1px solid #d8e3dd; border-radius: 8px; padding: 12px; text-align: center; }
     .iot-label { font-size: 12px; color: #666; margin-bottom: 4px; }
     .iot-val { font-size: 18px; font-weight: bold; color: #1c3829; }
     .iot-status { font-size: 11px; color: #2d6a4f; margin-top: 4px; }
 
-    /* 文化板块布局 */
-    .culture-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-    .culture-item { border: 1px solid #eee; border-radius: 8px; overflow: hidden; background: #fff; }
-    .culture-img { width: 100%; height: 160px; object-fit: cover; background-color: #e9ecef; }
-    .culture-content { padding: 15px; }
-    .culture-title { font-size: 15px; font-weight: 600; color: #1c3829; margin-bottom: 8px; }
-    .culture-text { font-size: 13px; color: #555; line-height: 1.6; }
+    /* 无人机巡航卡片 */
+    .drone-box { background: #1c3829; color: #fff; border-radius: 8px; padding: 15px; margin-top: 10px; }
+    .drone-header { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 10px; border-bottom: 1px dashed #3d5e4b; padding-bottom: 8px; }
+    .drone-badge { background: #2d6a4f; padding: 2px 8px; border-radius: 10px; font-size: 11px; color: #82e0aa; }
+
+    /* 品质服务与文化板块布局 */
+    .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .service-item { border: 1px solid #eee; border-radius: 8px; overflow: hidden; background: #fff; transition: transform 0.2s; }
+    .service-item:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+    .service-img { width: 100%; height: 160px; object-fit: cover; background-color: #e9ecef; }
+    .service-content { padding: 15px; }
+    .service-title { font-size: 15px; font-weight: 600; color: #1c3829; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .service-tag { font-size: 11px; background: #e8f5e9; color: #2d6a4f; padding: 2px 6px; border-radius: 4px; }
+    .service-text { font-size: 13px; color: #555; line-height: 1.6; }
 
     .btn { display: inline-block; background: #1c3829; color: #fff; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500; margin-top: 15px; width: 100%; text-align: center; }
     .btn:hover { background: #2d6a4f; }
@@ -46,45 +53,45 @@
 <body>
 
   <header>
-    <h1 id="portal-title">云南临沧双江自有茶园生态监测与数字资产门户</h1>
-    <p id="portal-subtitle">双江核心茶园高分遥感 · IoT 物联网实时微气候监测 · 普洱茶文化与品牌溯源</p>
+    <h1 id="portal-title">云南临沧双江自有茶园智慧巡航与数字资产门户</h1>
+    <p id="portal-subtitle">蜂巢无人机低空巡检 · IoT 物联网微气候监测 · 顶级品质保障与高端专属服务</p>
   </header>
 
   <div class="container">
     <!-- 卡片 1: 双江自有茶园卫星遥感视窗 -->
     <div class="card">
-      <div class="card-title">🛰️ 双江临沧生态茶园卫星遥感视窗</div>
+      <div class="card-title">🛰️ 双江生态茶园卫星与航拍定位</div>
       <div id="map"></div>
       <p style="font-size: 12px; color: #888; margin-top: 10px;" id="satellite-info">高分遥感图层更新时间：加载中...</p>
     </div>
 
-    <!-- 卡片 2: IoT 物联网传感器设备接入区 -->
+    <!-- 卡片 2: 蜂巢无人机自动巡航视窗 (新增科技感重点) -->
+    <div class="card">
+      <div class="card-title">🛸 蜂巢无人机低空巡航与多光谱监测</div>
+      <p style="font-size: 13px; color: #666;">自动巡航机巢实时数据回传：</p>
+      <div class="drone-box" id="drone-container">
+        <!-- 动态读取渲染 -->
+      </div>
+      <div class="iot-grid" id="drone-metrics">
+        <!-- 动态读取渲染 -->
+      </div>
+    </div>
+
+    <!-- 卡片 3: IoT 传感器与地面采集 -->
     <div class="card">
       <div class="card-title">📡 自有茶园 IoT 智能硬件传感视窗</div>
-      <p style="font-size: 13px; color: #666; margin-bottom: 10px;">现场监测设备实时回传数据：</p>
+      <p style="font-size: 13px; color: #666; margin-bottom: 10px;">地面微气象与土壤监测：</p>
       <div class="iot-grid" id="iot-container">
         <!-- 动态读取渲染 -->
       </div>
       <p style="font-size: 11px; color: #999; margin-top: 12px; text-align: right;" id="device-status">设备状态：连接中...</p>
     </div>
 
-    <!-- 卡片 3: 原料与采摘供应链动态 -->
-    <div class="card">
-      <div class="card-title">🍃 临沧双江产区原料与采摘动态</div>
-      <p style="font-size: 13px; color: #666;">本季自有茶园古树/有机茶采摘进度：</p>
-      <div class="progress-bar-bg">
-        <div class="progress-bar-fill" id="main-progress" style="width: 0%;">0%</div>
-      </div>
-      <ul class="info-list" id="section-list">
-        <!-- 动态读取渲染 -->
-      </ul>
-    </div>
-
-    <!-- 卡片 4: 普洱茶文化与古茶树历史（全宽板块） -->
+    <!-- 卡片 4: 顶级品质服务与科技溯源矩阵（全宽板块） -->
     <div class="card full-width">
-      <div class="card-title">🍵 临沧双江普洱茶文化与古树茶基因</div>
-      <div class="culture-grid" id="culture-container">
-        <!-- 动态渲染文化故事与插图 -->
+      <div class="card-title">🛡️ 双江古树茶顶级品质保障与专属服务矩阵</div>
+      <div class="service-grid" id="service-container">
+        <!-- 动态渲染品质服务卡片 -->
       </div>
     </div>
   </div>
@@ -92,25 +99,48 @@
   <!-- 引入 Leaflet 地图 JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    // 1. 初始化 Leaflet 地图，准确定位至云南临沧双江拉祜族佤族布朗族傣族自治县 (23.47, 99.82)
     var map = L.map('map').setView([23.47, 99.82], 12);
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: 18,
       attribution: 'Tiles &copy; Esri World Imagery'
     }).addTo(map);
 
-    // 2. 动态读取 data.json 配置文件
     fetch('data.json?t=' + new Date().getTime())
       .then(response => response.json())
       .then(data => {
-        // 更新地图标记（自有茶园及核心产区）
+        // 地图标记
         data.map_markers.forEach(marker => {
           var m = L.marker([marker.lat, marker.lng]).addTo(map);
           m.bindPopup(`<b>${marker.title}</b><br>${marker.desc}`);
         });
-        document.getElementById('satellite-info').innerText = '高分遥感图层更新时间：' + data.satellite_update;
+        document.getElementById('satellite-info').innerText = '高分遥感与低空航拍图层更新时间：' + data.satellite_update;
 
-        // 更新 IoT 硬件设备数据
+        // 渲染无人机巡航数据
+        var drone = data.drone_data;
+        document.getElementById('drone-container').innerHTML = `
+          <div class="drone-header">
+            <span><b>巡航状态：</b>${drone.status}</span>
+            <span class="drone-badge">机航电量 ${drone.battery}</span>
+          </div>
+          <div style="font-size: 12px; line-height: 1.6; color: #d1e7dd;">
+            📍 当前任务：${drone.current_task}<br>
+            📷 航拍覆盖：${drone.area_covered}<br>
+            🔍 最新预警：${drone.alert_msg}
+          </div>
+        `;
+        var droneMetricHtml = '';
+        drone.metrics.forEach(m => {
+          droneMetricHtml += `
+            <div class="iot-box">
+              <div class="iot-label">${m.name}</div>
+              <div class="iot-val">${m.value}</div>
+              <div class="iot-status">${m.status}</div>
+            </div>
+          `;
+        });
+        document.getElementById('drone-metrics').innerHTML = droneMetricHtml;
+
+        // 渲染 IoT 传感器
         var iotHtml = '';
         data.iot_data.sensors.forEach(sensor => {
           iotHtml += `
@@ -124,29 +154,23 @@
         document.getElementById('iot-container').innerHTML = iotHtml;
         document.getElementById('device-status').innerText = '硬件网关：' + data.iot_data.gateway_status + ' | 最近上报：' + data.iot_data.last_update;
 
-        // 更新采摘进度
-        document.getElementById('main-progress').style.width = data.main_progress + '%';
-        document.getElementById('main-progress').innerText = data.main_progress + '%';
-        var sectionHtml = '';
-        data.sections.forEach(sec => {
-          sectionHtml += `<li class="info-item"><span>${sec.name}</span><span style="font-weight:600; color:${sec.color || '#333'}">${sec.status}</span></li>`;
-        });
-        document.getElementById('section-list').innerHTML = sectionHtml;
-
-        // 更新茶文化板块（插图与文字）
-        var cultureHtml = '';
-        data.culture_items.forEach(item => {
-          cultureHtml += `
-            <div class="culture-item">
-              <img src="${item.image}" alt="${item.title}" class="culture-img">
-              <div class="culture-content">
-                <div class="culture-title">${item.title}</div>
-                <div class="culture-text">${item.text}</div>
+        // 渲染品质服务矩阵
+        var serviceHtml = '';
+        data.quality_services.forEach(item => {
+          serviceHtml += `
+            <div class="service-item">
+              <img src="${item.image}" alt="${item.title}" class="service-img">
+              <div class="service-content">
+                <div class="service-title">
+                  <span>${item.title}</span>
+                  <span class="service-tag">${item.tag}</span>
+                </div>
+                <div class="service-text">${item.text}</div>
               </div>
             </div>
           `;
         });
-        document.getElementById('culture-container').innerHTML = cultureHtml;
+        document.getElementById('service-container').innerHTML = serviceHtml;
       })
       .catch(err => console.error('加载 data.json 失败:', err));
   </script>
