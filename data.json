@@ -1,33 +1,23 @@
 {
+  "main_progress": 82,
   "satellite_update": "2026-10-08",
   "map_markers": [
     {
       "lat": 23.47,
       "lng": 99.82,
       "title": "双江自有生态茶园",
-      "desc": "无人机自动巡航机场 & IoT 地面传感网"
+      "desc": "核心有机茶栽培基地与 IoT 硬件监控点"
     },
     {
       "lat": 23.55,
       "lng": 99.85,
-      "title": "冰岛古树茶保护区",
-      "desc": "低空多光谱长势监控点"
+      "title": "冰岛茶区合作点",
+      "desc": "百年古树茶地理标志保护区"
     }
   ],
-  "drone_data": {
-    "status": "自动巡航中 (架次 #128)",
-    "battery": "88%",
-    "current_task": "双江茶园 A 区多光谱长势扫描",
-    "area_covered": "1,200 亩 / 30 分钟",
-    "alert_msg": "全区长势良好，病虫害风险指数 < 1%",
-    "metrics": [
-      { "name": "冠层 NDVI 指数", "value": "0.82", "status": "旺盛" },
-      { "name": "高分正射影像", "value": "4K/厘米级", "status": "已更新" }
-    ]
-  },
   "iot_data": {
     "gateway_status": "在线 (4G-IoT)",
-    "last_update": "2026-10-08 13:30",
+    "last_update": "2026-10-08 12:45",
     "sensors": [
       { "name": "茶园空气温度", "value": "22.5 ℃", "status": "适宜" },
       { "name": "相对湿度", "value": "78 %", "status": "优良" },
@@ -35,23 +25,25 @@
       { "name": "日光有效辐射", "value": "850 W/m²", "status": "充足" }
     ]
   },
-  "quality_services": [
+  "sections": [
+    { "name": "双江自有茶园有机头采", "status": "已完成 85%", "color": "#2d6a4f" },
+    { "name": "传统日光晒青工艺", "status": "质检合格率 99%", "color": "#2d6a4f" },
+    { "name": "成品初制仓储盘点", "status": "已入库 15 吨", "color": "#333" }
+  ],
+  "culture_items": [
     {
-      "title": "🛸 蜂巢无人机低空多光谱巡检",
-      "tag": "硬核科技",
-      "text": "采用工业级自动机场无人机，定时对茶园进行厘米级高分辨率扫描与 NDVI 植被长势分析，实时监控茶树水分与养分分布，打造数字化智慧茶山。",
-      "image": "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "title": "🌳 单株古树专属认养与全程溯源",
-      "tag": "私人定制",
-      "text": "每株百年古树拥有唯一数字 ID 与 GPS 坐标。客户可通过专属视窗 24 小时实时查看认养古树的无人机航拍、IoT 微气候及采摘初制全过程，确保 100% 纯料。",
+      "title": "双江：世界古茶树原产地核心",
+      "text": "双江拉祜族佤族布朗族傣族自治县位于北纬 23° 黄金茶树带，拥有世界上海拔最高、面积广阔的野生古茶树群落。高海拔、大云雾与强紫外线赋予了双江茶极其厚重的茶多酚与山野气韵。",
       "image": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80"
     },
     {
-      "title": "📦 恒温恒湿数字化私家茶仓",
-      "tag": "品质服务",
-      "text": "为高端客户提供临沧及原产地专业级数字化茶仓，实时回传仓储环境温湿度数据。传统日光生晒搭配科技陈化管理，保障普洱茶越陈越香的黄金品质。",
+      "title": "云南普洱茶传统晒青技艺",
+      "text": "坚持采用日光自然晒青，保留茶叶中天然活性酶的生命力。经过杀青、揉捻、阳光生晒，让茶叶在岁月的自然陈化中不断发酵转化，形成越陈越香的独特色泽与回甘。",
+      "image": "https://images.unsplash.com/photo-1597481499750-3e6b22637e12?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      "title": "科技赋能：从山头到茶杯的数字溯源",
+      "text": "通过物联网传感器监控气象土质，结合高分遥感与数字化区块链/大模型技术，让每一饼普洱茶的生长环境、采摘周期与仓储历程均可查可追溯，打造高品质出海品牌。",
       "image": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80"
     }
   ]
